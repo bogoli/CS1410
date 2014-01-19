@@ -98,10 +98,14 @@ void RemoveFriend (Friend friends[], int size){
 
 
 void SearchInterest (Friend friends[], int size, string keywords){
-	// keywords = tolower(keywords);
+	for (int i=0; i < keywords.length(); ++i){
+   		keywords = tolower(keywords[i]);
+	}
+
+	int emptyCount = 0;
 	for (int i = 0; i < size; i++){
 	// 	friends[i].interests = tolower(friends[i].interests);
-		if (friends[i].interests.compare(keywords) == 0){
+		if (friends[i].interests.find(keywords) <= friends[i].interests.size()){
 			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n";
 			cout << "    # " << i << endl;
 			cout << "    name:      " << friends[i].screenName << endl;
@@ -109,6 +113,13 @@ void SearchInterest (Friend friends[], int size, string keywords){
 			cout << "    interests: " << friends[i].interests << endl;
 			cout << endl;
 		}
+		else{
+			++emptyCount;
+			// cout << emptyCount; 
+		}
+	}
+	if (emptyCount == size){
+		cout << "\n\n\n           YOU HAVE NO FRIENDS WITH THIS INTEREST. \n\n\n";
 	}
 }
 
