@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 {
 	// declare variables 
 	const int NUM = 5; // number of friends in the network
-	char c; // input character
+	char c; // input char
 	bool programRunning = true; // to keep the menu up
 
 
@@ -38,7 +38,24 @@ int main(int argc, char const *argv[])
 	while(programRunning!=false){
 		// Display the menu on start, select option 
 		DisplayMenu();
-		cin >> c; 
+		cin >> c;
+		
+		// make c lower case and check for errors
+		if(c >= 'A' && c <= 'Z'){
+			c = tolower(c);
+		}
+		else if(c >= 'a' && c <= 'z'){
+			c = tolower(c);
+		}
+
+		else{
+			// c is not valid 	
+			cout << "\n==============================================================\n";
+			cout << "    Sorry, that is not a valid input. Please try again.\n";
+			cout << "==============================================================\n\n";
+			c = '\n';
+		}
+
 		// make the menu actually do stuff
 		switch(c){
 			case 'a': 	
@@ -76,12 +93,9 @@ int main(int argc, char const *argv[])
 			case 'e':
 				exit(1);
 			default:		
-				cout << "\n==============================================================\n";
-				cout << "    Sorry, that is not a valid input. Please try again.\n";
-				cout << "==============================================================\n\n";
 				break;
-			
 		} // end switch statement
+
 	} // end while loop for menu
 
 

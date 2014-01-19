@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 using namespace std;
 
 
@@ -141,8 +142,6 @@ void ListFriend(Friend friends[], int size){
 	}
 */
 	DisplayFriend(tempArray, 5);
-
-
 } // end of ListFriend
 
 float ReportAge(Friend friends[], int size){
