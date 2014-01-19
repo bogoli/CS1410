@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
 	const int NUM = 5; // number of friends in the network
 	char c; // input char
 	bool programRunning = true; // to keep the menu up
-
+	string searchterm;
 
 	// declare an array of Friend structures:
 	Friend friendList[NUM]; 
@@ -71,6 +71,10 @@ int main(int argc, char const *argv[])
 
 			case 's': 
 				// search interests
+				cout << "Search: ";
+				cin.ignore();
+				getline(cin, searchterm, '\n');
+			 	SearchInterest(friendList, NUM, searchterm);
 				break;
 
 			case 'd':
