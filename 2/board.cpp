@@ -1,4 +1,6 @@
 // board.cpp 
+#include <iostream>
+using namespace std;
 
 
 char** makeBoard(int rows, int cols){
