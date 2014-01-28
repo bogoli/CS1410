@@ -50,7 +50,7 @@ void printBoard(char** board, int rows, int cols){
 the column that the player wishes to drop his piece into and sets the value
  of the lowest row of that column that is not occupied to 'o'. */
 
-void PlayerMove(char **board, int rows, int cols){
+void PlayerMove(char** board, int rows, int cols){
 	cout << "Select a column: ";
 	int choice;
 	cin >> choice;
@@ -78,7 +78,7 @@ void PlayerMove(char **board, int rows, int cols){
 	}
 }
 
-void ComputerMove(char **board, int rows, int cols){
+void ComputerMove(char** board, int rows, int cols){
 	int choice = rand() % cols;
 
 	int count = 0;
@@ -95,45 +95,37 @@ void ComputerMove(char **board, int rows, int cols){
 		if(-1 < count){
 			board[count-1][choice] = 'x';
 		}
-		else{
-			// WHAT DO I DO IF THE COLUMN IS FULL? 
-		}
+
 	}
 }
 
+/*
+bool checkRow(char** board, int numberConnected){
+	int row = 0;
+	int col = 0;
+	for (int i = 0; i < (numberConnected+2); ++i){
+		for (int j = 0; j < (numberConnected+3); ++j){
+			if(board[i][j] == 'o'){
+				row = i;
+				col = j;
+			}		
+		}
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	int count = 0;
+	while(count != numberConnected){
+		if(board[row][col+count] == 'o'){
+			++count;
+		}
+	}
+	if (count == numberConnected){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+*/
 
 
 
@@ -183,7 +175,7 @@ int main(int argc, char const *argv[]){
 			break;
 		default:
 			cout << "\tIncorrect input.\n";
-			break;
+			exit(1);
 	}
 
 	// make the initial board 
@@ -200,6 +192,7 @@ int main(int argc, char const *argv[]){
 		printBoard(board, rows, cols);
 		ComputerMove(board, rows, cols);
 		printBoard(board, rows, cols);
+		//checkRow(board,numberConnected);
 	}
 	destroyBoard(board, rows);
 	return 0;
