@@ -1,15 +1,7 @@
 // Game.h
 
-//#ifndef GAME_H
-//#define GAME_H
-#include <iostream>
+#ifndef GAME_H
+#define GAME_H
 
-using namespace std;
 
-// to create a board
-char** makeBoard(int rows, int cols);
-
-// to print the board
-void printBoard(char**, int rows, int cols);
-
-// #endif // to prevent compiler errors 
+#endif // to prevent compiler errors 
