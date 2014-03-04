@@ -12,7 +12,7 @@ Sphere::Sphere(char* n, int r):Circle(n,r){
 	this->setType();
 }
 
-Sphere::Sphere(){
+Sphere::~Sphere(){
 
 }
 

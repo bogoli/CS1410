@@ -4,9 +4,9 @@
 #include "Triangle.h"
 #include "math.h"
 
-Triangle::Triangle(char* n, int l, int w):Geometry(n){
-	length = l;
-	width = w;
+Triangle::Triangle(char* n, int b, int h):Geometry(n){
+	base = b;
+	height = h;
 	Type = "Triangle";
 }
 
@@ -18,14 +18,10 @@ Triangle::~Triangle(){
 // these are virtual in the parent class
 double Triangle::ComputeVolume(){
 	// this will compute the area of the Triangle
-	return base*height/2;
+	return 0;
 }
 
 double Triangle::ComputeSurface(){
 	// this will compute the perimeter of the Triangle
-	// considering this is a right triangle
-
-	double hyp = sqrt((base*base) + (height*height));
-	return (hyp + base + height);
-
+	return base*height/2;
 }

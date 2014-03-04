@@ -2,8 +2,9 @@
 
 #include "Geometry.h"
 #include "Rectangle.h"
-#include "Circle.h"
 #include "Box.h"
+#include "Circle.h"
+#include "Sphere.h"
 
 
 int main(int argc, char const *argv[])
@@ -32,6 +33,13 @@ int main(int argc, char const *argv[])
 	blue.PrintGeometry();
 	cout  << blue.GetName() << " " << "Volume: "  << blue.ComputeVolume() << endl;
 	cout  << blue.GetName() << " " << "Surface: " << blue.ComputeSurface() << endl;
+
+	cout << endl << endl; 
+
+	Sphere salmon = Sphere("salmon", 10);
+	salmon.PrintGeometry();
+	cout  << salmon.GetName() << " " << "Volume: "  << salmon.ComputeVolume() << endl;
+	cout  << salmon.GetName() << " " << "Surface: " << salmon.ComputeSurface() << endl;
 
 
 
