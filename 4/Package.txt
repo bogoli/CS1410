@@ -1,0 +1,41 @@
+P
+50
+0.333
+Name name
+PSAddress address address
+PSCity city
+PSState
+PSZip
+PRName name
+PRAddress address address
+PRCity
+PRState
+PRZip
+O
+55
+.06
+OSName name 
+OSAddress address address
+OSCity city
+OSState
+OSZip
+ORName name
+ORAddress address address
+ORCity city
+ORState
+ORZip
+25.25
+t
+154
+.018
+TSName name
+TSAddress address address
+TSCity city
+TSState
+TSZip
+TRName name
+TRAddress address address
+TRCity city
+TRState
+TRZip
+.025
