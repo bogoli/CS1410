@@ -82,6 +82,8 @@ int main(int argc, char const *argv[])
 
 	Rectangle red = new Rectangle("red", 10, 10); 
 
+	// For some reason, this wants to call the copy constructor instead of the normal constructor
+	// So I wasn't sure what to do. 
 	
 	return 0;
 }
