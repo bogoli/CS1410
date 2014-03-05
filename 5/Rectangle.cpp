@@ -14,6 +14,11 @@ Rectangle::~Rectangle(){
 	// delete Type;
 }
 
+Rectangle::Rectangle(Rectangle &obj):Geometry(obj){
+	length = obj.length;
+	width = obj.width;
+}
+
 // these are virtual in the parent class
 double Rectangle::ComputeVolume(){
 	return 0;

@@ -24,7 +24,9 @@ double Prism::ComputeVolume(){
 }
 
 double Prism::ComputeSurface(){
-	return 0; // for now 
+	// calculate hypoteneus
+	double hyp = sqrt((base*base) + (height*height));
+	return ((base*length) + (height*length) + (hyp*length) + (base*height));
 }
 
 

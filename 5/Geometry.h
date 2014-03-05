@@ -16,15 +16,17 @@ public:
 	Geometry(char* n);
 	~Geometry();
 
+	Geometry(Geometry &obj);
+
 	char * GetName();
 	char * GetType();
+
 
 	// virtual abstract functions (to be defined in derived classes)
 	virtual double ComputeVolume() = 0;
 	virtual double ComputeSurface() = 0;
 
-	void PrintGeometry();
-	
+
 };
 
 #endif 

@@ -14,6 +14,8 @@ public:
 	Rectangle(char* n, int l, int w);
 	~Rectangle();
 
+	Rectangle(Rectangle &obj);
+
 	// these are virtual in the parent class
 	double ComputeVolume();
 	double ComputeSurface();

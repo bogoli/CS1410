@@ -9,23 +9,22 @@ Geometry::Geometry(char* n){
 }
 
 
-void Geometry::PrintGeometry(){
-	cout << "Name: " << this->Name << endl;
-	cout << "Type: " << this->Type << endl; 
-
-}
-
-/*
-Geometry::Geometry(Geomtery &obj){
+Geometry::Geometry(Geometry &obj){
 	// copy constructor 
 
+	Name = new char[30];
+	Type = new char[30];
+
+	for(int i = 0; i < 30; ++i){
+		Name[i] = obj.Name[i];
+		Type[i] = obj.Type[i];
+
+	}
 }
-*/
 
 
 Geometry::~Geometry(){
 	// inside Geometry Deconstructor
-
 }
 
 char * Geometry::GetName(){
@@ -37,12 +36,13 @@ char * Geometry::GetType(){
 }
 
 
-/*  VIRTUAL FUNCTIONS
+/*  VIRTUAL FUNCTIONS don't need to be here, because they were set to 0 in the .h file.
 
-double Geometry::ComputeVolume()=0;
-	// inside virtual function (will be defined in derived classes)
+	double Geometry::ComputeVolume()=0;
+		// inside virtual function (will be defined in derived classes)
 
-double ComputeSurface()=0;
-	// inside virtual function (will be defined in derived classes)
+	double ComputeSurface()=0;
+		// inside virtual function (will be defined in derived classes)
 
 */ 
+
