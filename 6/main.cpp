@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <fstream>
-
 #include <cstring>
 #include <string>
 #include <cstddef>
@@ -25,84 +24,73 @@ int main(){
 	while (environ[k] != NULL) {
 		// output to the file
 		fout << environ[k] << endl;
+
 		// output to the console
-		// cout << "\t" << environ[k] << endl;     // -------- UNCOMMENT LATER
+		cout << "\t" << environ[k] << endl;     // -------- UNCOMMENT LATER
+		
 		k++; 
 	}
-
 
 	// use the same output file as the input file 
 	ifstream fin;
 	fin.open("environment.txt"); 
 
 	if(fin.fail()){
+		// if the file can't be found
 		cout << "Could not find file.\n";
 	}
 	else{
-		cout << "The file exists\n";
+		// else, the file is working: 
 
+		// make a character array to store the next line
 		char line[100];
-		
 
+		// make a map to store all the words
 		map<string, int> words;
-/*
-		words["word"]=0;
-		words["word"]+=1;
-*/
-		
+
+		// temp variable to hold the next potential word
 		string temp;
+		// word variable to enter into the words map
 		string word;
 
-		// cout << "\tline before: \n" << lineStr << endl;;
-
 		while(!fin.eof()){
+			// get the next line
 			fin.getline(line,100);
+
+			// make it into a string
 			string lineStr(line);
+
 			for(int i = 0; i < lineStr.length(); ++i){
-				// cout << lineStr.at(i) << " "; 
+				// for each letter in the line, if it's alpha numeric and not a space: 
+			
 				if(isalnum(lineStr.at(i)) && !isspace(lineStr.at(i))){
-					// cout << lineStr.at(i) << ".....y" << endl; 
+					// add it to the temp string
 					temp.append(1, lineStr.at(i));
 
 				}
 				if(!isalnum(lineStr.at(i)) ){
-					// cout << "\t\tn" << endl;
-					if(temp.length() > 1){
-						
-						/*
-						for(int j = 0; j < temp.length(); ++j){
-							if(isalpha(temp.at(i))){
-								// if there's at least one letter
-								word = temp;
-								words[word]+=1;
-								temp = "";
-							}
-							else{ 
-								// temp = "";
-							} 
-						}
-						*/
+					// if it's not alphanumeric, make whatever is temp the word
+					// add the word to the map, and set temp to "" (empty)
 
+					if(temp.length() > 1){
 						word = temp;
 						words[word]+=1;
 						temp = "";
-
 					}
-					// cout << word << " " << words[word] << endl; 
+
 				}
 
 			}
-			// need this for the last word
+			// need this line to add the last word to the map 
 			word = temp;
 			words[word] += 1;
+		} // end while reading the file 
 
 
-		} // end while
-
+		// finding strings in the map that aren't words
 		for(map<string, int>::const_iterator it = words.begin(); it != words.end(); ++it){			
 			if (it->first.length() == 1){
 				// if the word is shorter than 2 erase it
-				// cout << it->first << endl;
 				words.erase(it);
 			}
 			else{
@@ -112,21 +100,32 @@ int main(){
 			}
 		}// end for loop that clears out non-words
 
-	
-
-
+		// to count the number of words
 		int count = 0;
 		
 		for(map<string, int>::const_iterator i = words.begin(); i != words.end(); ++i){			
 			// prints out the entire map
 			cout << fixed;
 			cout << setprecision(0);
-			cout << left << setw(20) << i->first << " " << i->second << endl;
-			++count;
+			cout << left << setw(30) << i->first << " " << i->second << endl;
+			++count;  // up the count
 		}
 		
 
-		cout << "Number of words: " << count;
+		cout << "\n\n\tNumber of words: " << count << endl << endl;
+
+
+
+
+		cout << "Please enter a the string you'd like to search for (up to 40 char): "; 
+		string searchString;
+		cin >> searchString;
+
+
+
+
+
+
 	} // end else (file is open)
 
 	// close the file
