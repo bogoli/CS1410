@@ -5,7 +5,9 @@
 #include <fstream>
 
 #include <cstring>
-#include <string> 
+#include <string>
+
+#include <map>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ int main(){
 		// output to the file
 		fout << environ[k] << endl;
 		// output to the console
-		cout << "\t" << environ[k] << endl;
+		// cout << "\t" << environ[k] << endl;     // -------- UNCOMMENT LATER
 		k++; 
 	}
 
@@ -39,16 +41,36 @@ int main(){
 		char line[100];
 		fin.getline(line,100);
 
-		
+		std::map<string, int> words;
+		words["word"]=0;
+		words["word"]+=1;
 
+		string lineStr(line);
+		string temp;
 
+		// cout << "\tline before: \n" << lineStr << endl;;
 
+		for(int i = 0; i < lineStr.length(); ++i){
 
+			// cout << lineStr.at(i) << " "; 
+			if(isalpha(lineStr.at(i)) ){
+				// cout << lineStr.at(i) << ".....y" << endl; 
+				
+				temp.append(1, lineStr.at(i));
 
+			}
+			if(!isalpha(lineStr.at(i))){
+				cout << "\t\tn" << endl;
+			}
 
+		}
 
+		cout << "\tTEMP IS:    " << temp << endl;
 
-
+		/*
+		cout << "length of line: " << linestr.length() << endl;
+		cout << linestr << endl;
+		*/
 		
 
 		// cout << line << endl;
@@ -58,7 +80,7 @@ int main(){
 	// close the file
 	fout.close(); 
 	fin.close();
-
+	cout << endl;
 return 0;
 
 }
