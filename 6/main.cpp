@@ -7,6 +7,7 @@
 #include <cstring>
 #include <string>
 
+#include <iomanip>
 #include <map>
 
 using namespace std;
@@ -41,7 +42,7 @@ int main(){
 		char line[100];
 		
 
-		std::map<string, int> words;
+		map<string, int> words;
 /*
 		words["word"]=0;
 		words["word"]+=1;
@@ -56,28 +57,29 @@ int main(){
 			fin.getline(line,100);
 			string lineStr(line);
 			for(int i = 0; i < lineStr.length(); ++i){
-
 				// cout << lineStr.at(i) << " "; 
-				if(isalpha(lineStr.at(i))){
+				if(isalpha(lineStr.at(i)) ){
+
 					// cout << lineStr.at(i) << ".....y" << endl; 
 					temp.append(1, lineStr.at(i));
 
 				}
 				if(!isalpha(lineStr.at(i))){
 					// cout << "\t\tn" << endl;
-					word = temp;
-					temp = "";
-					
-					words[word]+=1;
+					if(temp.length() > 1){
+						word = temp;
+						temp = "";
+						words[word]+=1;
+					}
 
-					cout << word << " " << words[word] << endl; 
+					// cout << word << " " << words[word] << endl; 
 				}
 
 			}
 			word = temp;
 			words[word] += 1;
 
-			cout << word << " " << words[word] << endl; 
+			// cout << word << " " << words[word] << endl; 
 
 		} // end while
 
@@ -89,9 +91,17 @@ int main(){
 		cout << linestr << endl;
 		*/
 		
-
 		// cout << line << endl;
-	}
+		
+
+		for(map<string, int>::const_iterator i = words.begin(); i != words.end(); ++i){
+			cout << fixed;
+			cout << setprecision(0);
+			cout << left << setw(20) << i->first << " " << i->second << endl;
+		}
+
+
+	} // end else (file is open)
 
 
 	// close the file
