@@ -47,23 +47,27 @@ int main(){
 
 		string lineStr(line);
 		string temp;
+		string word;
 
 		// cout << "\tline before: \n" << lineStr << endl;;
 
 		for(int i = 0; i < lineStr.length(); ++i){
 
 			// cout << lineStr.at(i) << " "; 
-			if(isalpha(lineStr.at(i)) ){
+			if(isalpha(lineStr.at(i))){
 				// cout << lineStr.at(i) << ".....y" << endl; 
-				
 				temp.append(1, lineStr.at(i));
 
 			}
 			if(!isalpha(lineStr.at(i))){
-				cout << "\t\tn" << endl;
+				// cout << "\t\tn" << endl;
+				word = temp;
+				temp = "";
+				cout << "WORD IS:    " << word << endl; 
 			}
 
 		}
+
 
 		cout << "\tTEMP IS:    " << temp << endl;
 
