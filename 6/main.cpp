@@ -30,6 +30,10 @@ int main(){
 		
 		k++; 
 	}
+	cout << endl << endl;
+
+	// close the output file
+	fout.close(); 
 
 	// use the same output file as the input file 
 	ifstream fin;
@@ -86,7 +90,6 @@ int main(){
 			words[word] += 1;
 		} // end while reading the file 
 
-
 		// finding strings in the map that aren't words
 		for(map<string, int>::const_iterator it = words.begin(); it != words.end(); ++it){			
 			if (it->first.length() == 1){
@@ -110,31 +113,83 @@ int main(){
 			cout << left << setw(30) << i->first << " " << i->second << endl;
 			++count;  // up the count
 		}
-		
-
+		// output the number of words
 		cout << "\n\n\tNumber of words: " << count << endl << endl;
-
-
-
-
-		cout << "Please enter a the string you'd like to search for (up to 40 char): "; 
-		string searchString;
-		cin >> searchString;
-
-
-
-
-
 
 	} // end else (file is open)
 
-	// close the file
-	fout.close(); 
+	// close the input file for now 
 	fin.close();
+
+	// ================================================================== Searching
+
+	// open the file again
+	fin.open("environment.txt");
+		if(fin.fail()){
+			// if the file can't be found
+			cout << "Could not find file.\n";
+		}
+
+		else{
+			// else, the file is working: 
+			char line[100];
+			char search[40];
+
+			cout << "Please enter the string you'd like to search for (up to 40 char): "; 
+			cin >> search;
+
+			bool end = false;
+			while(!end){
+				// convert the cstring to all uppercase
+				char c;
+				int i = 0; 
+				while (search[i]){
+	    			c = search[i];
+	    			search[i] = toupper(c);
+	    			++i;
+	    		}
+
+	    		// reset i for later
+	    		i = 0;
+
+	    		// convert c-string to string
+	    		string searchString(search);
+
+	    		if (searchString.find("END") != std::string::npos){
+	    			end = true;
+	    		}
+				
+				while(!fin.eof()){
+					// get the next line
+					fin.getline(line,100);	
+
+					// convert line to all uppercase
+					char d;
+					int j = 0;
+					while (line[j]){
+		    			d = line[j];
+		    			line[j] = toupper(d);
+	    				++j;
+		    		}
+
+		    		// convert line to from a cstring to a string
+					string lineStr(line);
+
+					// cout << searchString;
+					if( (lineStr.find(searchString)) != std::string::npos ){
+						cout << lineStr << endl;
+					}
+				}
+				cout << "Search (up to 40 char): "; 
+				cin >> search;
+
+			} // end while(!end)
+
+		} // end else
+
+
+
 	cout << endl;
-
-
-
 return 0;
 
 }
