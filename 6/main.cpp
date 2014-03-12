@@ -155,7 +155,7 @@ int main(){
 	    		// convert c-string to string
 	    		string searchString(search);
 
-	    		if (searchString.find("END") != std::string::npos){
+	    		if ( (searchString.find("END") != std::string::npos) || searchString == ""){
 	    			end = true;
 	    		}
 				
@@ -180,6 +180,12 @@ int main(){
 						cout << lineStr << endl;
 					}
 				}
+				// need to clear the end of file flag so that the file starts to read over
+				// every time that you search
+				fin.clear();
+				fin.seekg(0, ios::beg);
+
+				// redisplay the prompt and get input 
 				cout << "Search (up to 40 char): "; 
 				cin >> search;
 
