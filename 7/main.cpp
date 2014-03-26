@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <string> 
+#include "Friend.h"
 
 // started working 6:30 --> 7:00
 
@@ -32,30 +34,56 @@ int main(int argc, char const *argv[])
 	// FILE SETTING UP: file handler, binary flags, etc
 	fstream file("myNetwork.dat");
 	// fstream file("myNetwork.dat", ios::in|ios::out|ios::binary);
-	file.open("myNetwork.dat", ios::out|ios::in|ios::binary|ios::app);
+	file.open("myNetwork.dat", ios::in|ios::out|ios::binary);
 
+	/* Having some issues with file flags, failure, etc. using file.is_open instead
 	cout << "file.fail() = " << file.fail() << endl;
+	cout << "file.is_open() = " << file.is_open() << endl; 
+	*/
 
-	if(file == 0){
+	if(!file.is_open()){
 		// the file doesn't exist yet 
 		cout << "The file did not exist, creating a new file. \n";
 
 		// open the same file as only output, which creates a file
 		file.open("myNetwork.dat", ios::out);
-		// close the file, and reopen with all the flags
+		
+		// close the file, and reopen with all the right flags
 		file.close();
-		file.open("myNetwork.dat", ios::out|ios::in|ios::binary);
+		file.open("myNetwork.dat",ios::in|ios::out|ios::binary);
 
 		// start the while loop
 		programRunning = true;
 	}
 
-	else if(file != 0){
+	else if(file.is_open() == 1){
 		cout << "The file exists, would you like to replace the contents? (Y/N): ";
 		cin >> fileChoice;
+		switch(fileChoice){
+			case 'y':
+			case 'Y':
+				file.close();
+				file.open("myNetwork.dat", ios::in|ios::out|ios::binary|ios::trunc);
+				// start the while loop:
+				programRunning = true;
+				break;
+			case 'n':
+			case 'N':
+				file.close();
+				file.open("myNetwork.dat", ios::in|ios::out|ios::binary|ios::ate);
+				// start the while loop:
+				programRunning = true;
+				break;
+			default:
+				cout << "Invalid input. File contents saved.\n";
+				file.close();
+				file.open("myNetwork.dat", ios::in|ios::out|ios::binary|ios::ate);
 
+				// start the while loop:
+				programRunning = true;
+				break;
 
-
+		}// end switch
 
 	} // end else (the file is working)
 
@@ -64,6 +92,12 @@ int main(int argc, char const *argv[])
 	while(programRunning == true){
 		printMenu();
 		cin >> menuChoice;
+		
+		char tempName[30];
+		char tempInterests[100];
+		int tempAge;
+
+		Friend temp = Friend();
 
 		switch(menuChoice){
 			case 'A':
@@ -72,7 +106,23 @@ int main(int argc, char const *argv[])
 				// report to the user the unique ID that the program has just assigned. This
 				// unique ID should be the file record or object number. Add the new Friend’s 
 				// information to the right position (i.e., the end) of the “myNetwork.dat” file.
-				cout << "\t\tAdd a friend \n";
+				cout << "\tAdd a friend \n";
+				
+				cout << "Name: ";
+				cin.get(tempName,30);
+
+				cout << "Interest: ";
+				// cin.getline(tempInterests, 100);
+				cin.get (tempInterests,100);
+
+				cout << "Age: ";
+				cin >> tempAge;
+
+				file << temp.getName();
+				file << temp.getInterests();
+				file << temp.getAge();
+
+
 				break;
 
 			case 'R':
