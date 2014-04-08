@@ -11,7 +11,13 @@ int main()
 	TUStack myStack = TUStack(5);
 
 	myStack.Push(5);
-	cout << myStack.Pop() << endl;
+	myStack.Push(4);
+	myStack.Push(3);
+	myStack.Push(2);
+	myStack.Push(1);
+	myStack.Push(9);
+
+	cout << myStack.Position() << " " << myStack.Pop() << endl;
 	myStack.print();
 
 	return 0;
