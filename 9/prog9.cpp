@@ -8,6 +8,11 @@ using namespace std;
 
 int main()
 {
-	
+	TUStack myStack = TUStack(5);
+
+	myStack.Push(5);
+	cout << myStack.Pop() << endl;
+	myStack.print();
+
 	return 0;
 }
