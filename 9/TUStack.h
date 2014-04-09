@@ -13,55 +13,68 @@ private:
 	int top;
 
 public:
-	TUStack(){
-		nSize = 0;
-		stack = NULL;
-	}
+	TUStack();
+	TUStack(int n);
 
-	TUStack(int n){
-		nSize = n;
-		stack = new int[nSize];
-		top = 0;
-	}
+	void Push(int item);
+	int Pop();
 
-	void Push(int item){
-		stack[top] = item;
-		top += 1;
-	}
+	int Size();
+	int Position();
+	void print();
+	int& operator[ ] (int i);
 
-	int Pop(){
-		top -= 1; 
-		return stack[top];
-	}
+	~TUStack();
 
-	int Size(){
-		return nSize;
-	}
-
-	int Position(){
-		return top;
-	}
-
-	void print(){
-		for(int i = 0; i < nSize; ++i){
-			cout << i << " " << stack[i] << endl;
-		}
-	}
-
-
-	~TUStack(){
-		delete stack;
-	}
-
-	int& operator[ ] (int i){
-		if (i < 0 ){
-			// throw outOfBound(i, nSize, "Less than 0.");
-		}
-		else if (i >= nSize){ 
-			// throw outOfBound(i, nSize, "Larger than stack size."); 
-		}
-		return stack[i];
-	}
 };
+
+TUStack::TUStack(){
+	nSize = 0;
+	stack = NULL;
+}  
+
+TUStack::TUStack(int n){
+	nSize = n;
+	stack = new int[nSize];
+	top = 0;
+}
+
+void TUStack::Push(int item){
+	stack[top] = item;
+	top += 1;
+}
+
+int TUStack::Pop(){
+	top -= 1; 
+	return stack[top];
+}
+
+int TUStack::Size(){
+	return nSize;
+}
+
+int TUStack::Position(){
+	return top;
+}
+
+void TUStack::print(){
+	for(int i = 0; i < nSize; ++i){
+		cout << i << " " << stack[i] << endl;
+	}
+}
+
+int& TUStack::operator[ ] (int i){
+	if (i < 0 ){
+		// throw outOfBound(i, nSize, "Less than 0.");
+	}
+	else if (i >= nSize){ 
+		// throw outOfBound(i, nSize, "Larger than stack size."); 
+	}
+	return stack[i];
+}
+
+TUStack::~TUStack(){
+	delete stack;
+}
 
 #endif
