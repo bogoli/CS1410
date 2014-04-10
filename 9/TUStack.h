@@ -4,13 +4,13 @@
 #define TUSTACK_H
 
 #include <iostream>
-#include <cstring>
 #include <string>
 using namespace std;
 
+template <class T>
 class TUStack{
 private:
-	int* stack;
+	T *stack;	// generic data type
 	int nSize;
 	int top;
 
@@ -18,13 +18,16 @@ public:
 	TUStack();
 	TUStack(int n);
 
-	void Push(int item);
-	int Pop();
+	// copy constructor
+	TUStack(const TUStack &obj);
+
+	void Push(T item);
+	T Pop();
 
 	int Size();
 	int Position();
 	void print();
-	int& operator[ ] (int i);
+	T& operator[ ] (int i);
 
 	~TUStack();
 
@@ -72,10 +75,11 @@ public:
 	public:
 		int index;
 		int size;
-		int duplicateValue;
+		T duplicateValue;
 		string message;
 
-		duplicateItem(int i, int s, int d, string m){
+
+		duplicateItem(int i, int s, T d, string m){
 			index = i;
 			size = s;
 			duplicateValue = d;
@@ -85,54 +89,73 @@ public:
 
 };
 
-TUStack::TUStack(){
+template <class T>
+TUStack<T>::TUStack(){
 	nSize = 0;
 	stack = NULL;
 }  
 
-TUStack::TUStack(int n){
+
+template <class T>
+TUStack<T>::TUStack(int n){
 	nSize = n;
-	stack = new int[nSize];
+	stack = new T[nSize];
 	top = 0;
 }
+// Copy constructor
+template <class T>
+TUStack<T>::TUStack(const TUStack &obj){
+	nSize = obj.nSize ;
+	stack = new T[nSize] ;
+	for (int i = 0 ; i < nSize ; i++)
+	{
+		stack[i] = obj.stack[i];
+	}
+}
 
-void TUStack::Push(int item){
+
+template <class T>
+void TUStack<T>::Push(T item){
 	if(top >= nSize){
 		throw fullStack(top, nSize, "Full stack! Cannot push!");
 	}
 	else{
+		for(int i = 0; i < top; ++i){
+			if(stack[i] == item){
+				throw duplicateItem(i, nSize, item, "Duplicate value detected.");
+			}
+		}
 		stack[top] = item;
-		top += 1; 
+		top += 1;
 	}
 }
-
-int TUStack::Pop(){
+template <class T>
+T TUStack<T>::Pop(){
 	top -= 1; 
 	if (top < 0){
 		throw emptyStack(top, nSize, "Empty stack! Cannot pop!");
 	}
-	else{
-		int topValue = stack[top];
-		stack[top] = 0;
-		return topValue;
-	}
-}
+	int topValue = stack[top];
+	stack[top] = 0;
+	return topValue;
 
-int TUStack::Size(){
+}
+template <class T>
+int TUStack<T>::Size(){
 	return nSize;
 }
-
-int TUStack::Position(){
+template <class T>
+int TUStack<T>::Position(){
 	return top;
 }
-
-void TUStack::print(){
+template <class T>
+void TUStack<T>::print(){
 	for(int i = 0; i < nSize; ++i){
 		cout << i << " " << stack[i] << endl;
 	}
 }
-
-int& TUStack::operator[ ] (int i){
+template <class T>
+T& TUStack<T>::operator[ ] (int i){
 	if (i < 0 ){
 		throw outOfBound(i, nSize, "Less than 0.");
 	}
@@ -141,9 +164,9 @@ int& TUStack::operator[ ] (int i){
 	}
 	return stack[i];
 }
-
-TUStack::~TUStack(){
-	delete stack;
+template <class T>
+TUStack<T>::~TUStack(){
+	// delete stack;
 }
 
 #endif
