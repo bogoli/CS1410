@@ -8,17 +8,42 @@ using namespace std;
 
 int main()
 {
-	TUStack myStack = TUStack(5);
+	try{
+		TUStack myStack = TUStack(2);
 
-	myStack.Push(5);
-	myStack.Push(4);
-	myStack.Push(3);
-	myStack.Push(2);
-	myStack.Push(1);
-	myStack.Push(9);
+		myStack.Push(1);
+		myStack.Push(2);
 
-	cout << myStack.Position() << " " << myStack.Pop() << endl;
-	myStack.print();
+		
+		myStack.print();
+		cout << endl;
+		myStack.print();
+
+	}
+	catch (TUStack::outOfBound exception){	
+		cout << "Error Report --------------------------------------" << endl ;
+		cout << "input index is: " << exception.index << endl ;
+		cout << "array size is: " << exception.size << endl ;
+		cout << "exception nature: " << exception.message << endl ;
+	}
+	catch (TUStack::emptyStack exception){	
+		cout << "Error Report --------------------------------------" << endl ;
+		cout << "input index is: " << exception.index << endl ;
+		cout << "array size is: " << exception.size << endl ;
+		cout << "exception nature: " << exception.message << endl ;
+	}	
+	catch (TUStack::fullStack exception){	
+		cout << "Error Report --------------------------------------" << endl ;
+		cout << "input index is: " << exception.index << endl ;
+		cout << "array size is: " << exception.size << endl ;
+		cout << "exception nature: " << exception.message << endl ;
+	}
+	catch (TUStack::duplicateItem exception){	
+		cout << "Error Report --------------------------------------" << endl ;
+		cout << "input index is: " << exception.index << endl ;
+		cout << "array size is: " << exception.size << endl ;
+		cout << "exception nature: " << exception.message << endl ;
+	}
 
 	return 0;
 }

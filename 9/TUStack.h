@@ -4,6 +4,8 @@
 #define TUSTACK_H
 
 #include <iostream>
+#include <cstring>
+#include <string>
 using namespace std;
 
 class TUStack{
@@ -26,6 +28,61 @@ public:
 
 	~TUStack();
 
+	// Exceptions class
+	class outOfBound{
+	public:
+		int index; 
+		int size; 
+		string message;
+
+		outOfBound(int i, int s, string m){
+			index = i;
+			size = s;
+			message = m;
+		}
+	};
+
+	class emptyStack{
+	public:
+		int index;
+		int size;
+		string message;
+
+		emptyStack(int i, int s, string m){
+			index = i;
+			size = s;
+			message = m;
+		}
+	};
+
+	class fullStack{
+	public:
+		int index;
+		int size;
+		string message;
+
+		fullStack(int i, int s, string m){
+			index = i;
+			size = s;
+			message = m;
+		}
+	};
+
+	class duplicateItem{
+	public:
+		int index;
+		int size;
+		int duplicateValue;
+		string message;
+
+		duplicateItem(int i, int s, int d, string m){
+			index = i;
+			size = s;
+			duplicateValue = d;
+			message = m;
+		}
+	};
+
 };
 
 TUStack::TUStack(){
@@ -40,13 +97,25 @@ TUStack::TUStack(int n){
 }
 
 void TUStack::Push(int item){
-	stack[top] = item;
-	top += 1;
+	if(top >= nSize){
+		throw fullStack(top, nSize, "Full stack! Cannot push!");
+	}
+	else{
+		stack[top] = item;
+		top += 1; 
+	}
 }
 
 int TUStack::Pop(){
 	top -= 1; 
-	return stack[top];
+	if (top < 0){
+		throw emptyStack(top, nSize, "Empty stack! Cannot pop!");
+	}
+	else{
+		int topValue = stack[top];
+		stack[top] = 0;
+		return topValue;
+	}
 }
 
 int TUStack::Size(){
@@ -65,10 +134,10 @@ void TUStack::print(){
 
 int& TUStack::operator[ ] (int i){
 	if (i < 0 ){
-		// throw outOfBound(i, nSize, "Less than 0.");
+		throw outOfBound(i, nSize, "Less than 0.");
 	}
 	else if (i >= nSize){ 
-		// throw outOfBound(i, nSize, "Larger than stack size."); 
+		throw outOfBound(i, nSize, "Larger than stack size."); 
 	}
 	return stack[i];
 }
