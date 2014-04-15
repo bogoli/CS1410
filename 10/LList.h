@@ -8,10 +8,16 @@ using namespace std;
 
 // Create a data type for the linked list node
 class ListNode{  
+private:
+	void clearNextNode(){ 
+		if (next != NULL) { 
+			delete next; 
+		} 
+	}
 public:	
 	ListNode();
 	ListNode(int n);
-
+	~ListNode();
 	int number;
 	ListNode *next;
 }; 

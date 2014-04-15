@@ -7,22 +7,23 @@
 
 #include "LList.h"
 
-ListNode::ListNode()
-{
+ListNode::ListNode(){
 	number = 0;
 	next = NULL ;
 }
 
-ListNode::ListNode(int n)
-{   
+ListNode::ListNode(int n){   
 	number = n ;
 	next = NULL ;
 }
 
-LList::LList()
-{    
+LList::LList(){    
 	head = new ListNode (0);
 	head->next = new ListNode (100);
+}
+
+ListNode::~ListNode(){ 
+	clearNextNode(); 
 }
 
 // Steps for the Insert operation
@@ -36,8 +37,7 @@ void LList::Insert (int n){
 	ListNode *here = head->next ; // First real node
 	ListNode *prev = head;
 
-	while (n > here->number)  // Find where the number goes
-	{	
+	while (n > here->number){  // Find where the number goes	
 		prev = here ;
 		here = here->next ;
 	}
