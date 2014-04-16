@@ -1,27 +1,38 @@
-// Set.h
+// A linked-list of numbers
+#ifndef _Set_H
+#define _Set_H
 
 #include <string>
 #include <iostream>
-#include "LList.h"
-
 using namespace std;
 
-#ifndef SET_H
-#define SET_H
-
-
-class Set{
+// Create a data type for the linked list node
+class ListNode{  
 private:
-	LList list;
+	void clearNextNode(){ 
+		if (next != NULL) { 
+			delete next; 
+		} 
+	}
+public:	
+	ListNode();
+	ListNode(int n);
+	~ListNode();
+	int number;
+	ListNode *next;
+}; 
+
+class Set{  
+private:
+	ListNode *head;
+
 public:
 	Set();
-	~Set();
 
-	void Insert(int n);
-
+	void Insert(int n);	// insert a new number in order
+	void Delete(int n);	// delete a number
+	void Display();		// display list in order
+	bool Find(int n); // find an element in the list
 };
-
-
-
 
 #endif

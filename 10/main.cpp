@@ -1,11 +1,9 @@
 // main.cpp
-#include "LList.h"
 #include "Set.h"
-
 
 int main()
 {	
-	LList list;
+	Set list;
 	char option;
 	int thisnumber;
 
@@ -42,3 +40,12 @@ int main()
 		}
 	}
 }
+
+
+/*
+int operator[](const int) const;
+bool operator<(const Set&) const;
+Set operator^(const Set&) const;
+Set operator+(const Set&) const;
+Set operator-(const Set&) const;
+*/
