@@ -8,7 +8,7 @@ int main()
 	int thisnumber;
 
 	while (1)
-	{	cout << "Options:  (I)nsert, (D)isplay, (R)emove, (E)xit  ";
+	{	cout << "Options: (I)nsert (F)ind (D)isplay (R)emove (E)xit  ";
 		cin >> option;
 		cin.ignore();
 		
@@ -16,10 +16,15 @@ int main()
 		{	
 		case 'I':
 		case 'i':	
-			cout << "Enter name: ";
-			cin >> thisnumber;
-			list.Insert(thisnumber);
-			break;
+			try{
+				cout << "Enter name: ";
+				cin >> thisnumber;
+				list.Insert(thisnumber);
+			} catch(Set::duplicateItem e){
+				cout << "duplicate item: " << e.number << endl;
+				cout << "exception: " << e.message << endl;
+			}
+				break;
 		
 		case 'D':  
 		case 'd':	
@@ -31,6 +36,13 @@ int main()
 			cout << "Enter name: ";
 			cin >> thisnumber;
 			list.Delete(thisnumber);
+			break;
+
+		case 'F':
+		case 'f':
+			cout << "What are you looking for? ";
+			cin >> thisnumber;
+			list.Find(thisnumber);
 			break;
 
 		case 'E':  
@@ -48,4 +60,9 @@ bool operator<(const Set&) const;
 Set operator^(const Set&) const;
 Set operator+(const Set&) const;
 Set operator-(const Set&) const;
+
+ostream& operator<<(ostream& out, const Set& obj) { obj.Print(out); return out; }
+istream& operator>>(istream& in, Set& obj) { obj.Insert(in); return in; }
+
+
 */

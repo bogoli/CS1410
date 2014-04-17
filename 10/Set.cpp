@@ -7,14 +7,18 @@
 
 #include "Set.h"
 
-ListNode::ListNode(){
+Set::ListNode::ListNode(){
 	number = 0;
 	next = NULL ;
 }
 
-ListNode::ListNode(int n){   
+Set::ListNode::ListNode(int n){   
 	number = n ;
 	next = NULL ;
+}
+
+Set::ListNode::~ListNode(){ 
+	clearNextNode(); 
 }
 
 Set::Set(){    
@@ -22,17 +26,12 @@ Set::Set(){
 	head->next = new ListNode (100);
 }
 
-ListNode::~ListNode(){ 
-	clearNextNode(); 
+Set::~Set(){
+	
 }
 
-// Steps for the Insert operation
-// 1. create a new node
-// 2. store data in the new node
-// 3. find the first node x whose value is greater than the new value
-// 4. insert the new node between the two existing nodes (x and the node before x)
 void Set::Insert (int n){	
-	ListNode *newnode = new ListNode(n) ;
+	ListNode *newnode = new ListNode(n);
 
 	ListNode *here = head->next ; // First real node
 	ListNode *prev = head;
@@ -41,13 +40,13 @@ void Set::Insert (int n){
 		prev = here ;
 		here = here->next ;
 	}
+	if (here->number == n){	
+		throw duplicateItem(n, "Duplicate Item");
+	}
 
 	prev->next = newnode;
 	newnode->next = here;
 }
-
-// Steps for the Delete operation
-// 1. find the first node whose value is equal to the new value, or end of list
 
 void Set::Delete (int n){	
 	ListNode *here = head->next ;
@@ -67,11 +66,7 @@ void Set::Delete (int n){
 		delete here ;
 	}
 }
-// Steps for Display operation
-// 1. Assign the head node "next" pointer to a "node pointer"
-// 2. while "node pointer" is not NULL
-//        display node data
-//        update "node pointer" with "next node"
+
 void Set::Display(){    
 	ListNode *here = head->next ;			// here is the first real node
 	
@@ -81,7 +76,6 @@ void Set::Display(){
 		here = here->next ;
 	}
 }
-
 
 bool Set::Find(int n){	
 	ListNode *here = head->next ;
@@ -93,11 +87,14 @@ bool Set::Find(int n){
 		here = here->next ;
 	}
 
-	if (here->next != NULL)
-	{	
-		prev->next = here->next ;
+	if (here->number == n){	
 		cout << n << " was found in the set.\n";
 		return true;
 	}
+	if(here->next == NULL){
+		cout << n << " was NOT FOUND.\n";
+	}
 	return false;
 }
+
+
