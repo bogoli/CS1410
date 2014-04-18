@@ -13,12 +13,8 @@ Set::ListNode::ListNode(){
 }
 
 Set::ListNode::ListNode(int n){   
-	number = n ;
-	next = NULL ;
-}
-
-Set::ListNode::~ListNode(){ 
-	clearNextNode(); 
+	number = n;
+	next = NULL;
 }
 
 Set::Set(){    
@@ -26,8 +22,11 @@ Set::Set(){
 	head->next = new ListNode (100);
 }
 
+Set::Set(const Set& origSet){
+	copySet(origSet);
+}
 Set::~Set(){
-	
+	clearSet();
 }
 
 void Set::Insert (int n){	
@@ -67,22 +66,22 @@ void Set::Delete (int n){
 	}
 }
 
-void Set::Display(){    
+void Set::Display() const{    
 	ListNode *here = head->next ;			// here is the first real node
 	
 	while (here->next != NULL)				// here->next==NULL means that here is the last real node
 	{     
-		cout << here->number << endl ;
+		cout << here->number << " " ;
 		here = here->next ;
 	}
+	cout << endl;
 }
 
-bool Set::Find(int n){	
+bool Set::Find(int n) const{	
 	ListNode *here = head->next ;
 	ListNode *prev = head ;
 	
-	while (n != here->number && here->next != NULL) // here->next==NULL means that here is the last real node
-	{	
+	while (n != here->number && here->next != NULL){ // here->next==NULL means that here is the last real node	
 		prev = here ;
 		here = here->next ;
 	}
@@ -96,5 +95,116 @@ bool Set::Find(int n){
 	}
 	return false;
 }
+
+int Set::Size(){
+	ListNode *here = head->next ;
+	ListNode *prev = head ;
+	int counter = 0;
+	
+	while (here->next != NULL){ // here->next==NULL means that here is the last real node	
+		prev = here;
+		here = here->next;
+		++counter;
+	}
+
+	return counter;
+}
+
+
+int Set::operator[](const int n) const{
+	ListNode *here = head->next ;
+	ListNode *prev = head ;
+	int counter = 0;
+	
+	while (here->next != NULL){ // here->next==NULL means that here is the last real node	
+		prev = here;
+		here = here->next;
+		++counter;
+	}
+
+	if(counter == n){
+		return here->number;
+	}
+	// if out of bounds return -1
+	return -1;
+
+}
+
+bool Set::operator<(const Set& S2) const{
+	// returns true if S1 is a proper subset of S2 (S1 and S2 cannot be the same sets).
+	ListNode *here = head->next;
+	ListNode *prev = head;
+	
+	while (here->next != NULL){
+		prev = here;
+		here = here->next;
+	}
+
+	if(S2.Find(here->number) == false){
+		return false;
+	}
+	return true;
+}
+
+
+Set Set::operator^(const Set& S2) const{
+	ListNode *here = head->next;
+	ListNode *prev = head;
+
+	Set intersection;
+	
+	while (here->next != NULL){
+		prev = here;
+		here = here->next;
+	}
+
+	if(S2.Find(here->number) == true){
+		intersection.Insert(here->number);
+	}
+
+	return intersection;
+}
+
+
+Set Set::operator+(const Set& S2) const{
+	ListNode *here = head->next;
+	ListNode *prev = head;
+
+	Set addition = Set(S2);
+	
+	while (here->next != NULL){
+		prev = here;
+		here = here->next;
+	}
+
+	if(S2.Find(here->number) == false){
+		addition.Insert(here->number);
+	}
+
+	return addition;
+
+}
+
+Set Set::operator-(const Set& S2) const{
+	ListNode *here = head->next;
+	ListNode *prev = head;
+
+	Set difference;
+	
+	while (here->next != NULL){
+		prev = here;
+		here = here->next;
+	}
+
+	if(S2.Find(here->number) == false){
+		difference.Insert(here->number);
+	}
+
+	return difference;
+}
+
+
+istream& operator>>(istream& in, Set& origSet) { origSet.Insert(in); return in; }
+
 
 

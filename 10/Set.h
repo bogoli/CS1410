@@ -17,26 +17,49 @@ private:
 				delete next; 
 			} 
 		}
+		// end clearNextNode
+
+		void copyNode(const ListNode& origNode) {
+			number = origNode.number;
+			if (origNode.next != NULL) {
+				next = new ListNode(*origNode.next);
+			}
+			else {
+				next = NULL;
+			}
+		} // end copyNode
 	public:	
 		ListNode();
 		ListNode(int n);
-		~ListNode();
+		ListNode(const ListNode& origNode){copyNode(origNode);};
+		~ListNode(){clearNextNode();};
 		int number;
 		ListNode *next;
-	}; 
+	};  // end of ListNode subclass
 
 	ListNode *head;
+	void copySet(const Set& origSet) {head = new ListNode(*origSet.head);}
+    void clearSet() { if (head != NULL) { delete head; } }
 
 public:
 	Set();
+	Set(const Set& S);
 	~Set();
 
-	void Insert(int n);	// insert a new number in order
-	void Delete(int n);	// delete a number
-	void Display();		// display list in order
-	bool Find(int n); // find an element in the list
+	void Insert(int n);	
+	void Insert(istream& in){ int n; in >> n; Insert(n); }
 
-	
+	void Delete(int n);	
+	void Display() const;		
+	bool Find(int n) const; 
+	int Size(); 	
+	int operator[](const int) const; 	// return the element with that index
+	bool operator<(const Set&) const;  	// returns true if first is subset of second
+	Set operator^(const Set&) const;	// returns a new set containing the intersection
+	Set operator+(const Set&) const;
+	Set operator-(const Set&) const;
+
+
 	// Exception class
 	class duplicateItem{
 	public:
@@ -49,5 +72,8 @@ public:
 		}
 	};
 };
+
+istream& operator>>(istream&, Set&);
+
 
 #endif

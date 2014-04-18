@@ -3,66 +3,92 @@
 
 int main()
 {	
-	Set list;
+	Set mySet;
 	char option;
 	int thisnumber;
+	bool keepGoing = false;
 
-	while (1)
-	{	cout << "Options: (I)nsert (F)ind (D)isplay (R)emove (E)xit  ";
+	while (keepGoing == false){	
+		cout << "\tOptions: \n";
+		cout << "\t(I)nsert \n";
+		cout << "\t(F)ind \n";
+		cout << "\t(D)isplay\n";
+		cout << "\t(R)emove \n";
+		cout << "\t(S)ize of Set\n";
+		cout << "\t(C)ontinue  \n";
 		cin >> option;
 		cin.ignore();
 		
-		switch (option)
-		{	
+		switch (option){	
 		case 'I':
 		case 'i':	
 			try{
-				cout << "Enter name: ";
+				cout << "Enter number: ";
 				cin >> thisnumber;
-				list.Insert(thisnumber);
+				mySet.Insert(thisnumber);
 			} catch(Set::duplicateItem e){
 				cout << "duplicate item: " << e.number << endl;
 				cout << "exception: " << e.message << endl;
 			}
 				break;
-		
-		case 'D':  
-		case 'd':	
-			list.Display();
-			break;
-
-		case 'R': 
-		case 'r':	
-			cout << "Enter name: ";
-			cin >> thisnumber;
-			list.Delete(thisnumber);
-			break;
 
 		case 'F':
 		case 'f':
 			cout << "What are you looking for? ";
 			cin >> thisnumber;
-			list.Find(thisnumber);
+			mySet.Find(thisnumber);
+			break;
+		
+		case 'D':  
+		case 'd':	
+			mySet.Display();
 			break;
 
-		case 'E':  
-		case 'e':
-			exit(0);
-			return 0;
+		case 'R': 
+		case 'r':	
+			cout << "Enter a number: ";
+			cin >> thisnumber;
+			mySet.Delete(thisnumber);
+			break;
+
+		case 'S':
+		case 's':
+			cout << mySet.Size() << endl;
+			break;
+
+		case 'C':  
+		case 'c':
+			keepGoing = true;
 		}
 	}
+
+
+	cout << "Driver for overloaded operators: \n";
+	Set A = Set();
+	A.Insert(1);
+	A.Insert(2);
+	A.Insert(3);
+	A.Insert(4);
+
+	Set B = A;  // overloaded = operator works
+	
+	Set C = Set();
+	C.Insert(4);
+	C.Insert(5);
+	C.Insert(6);
+	C.Insert(7);
+	C.Insert(8);
+
+
+	cout << "Set A: ";
+	A.Display();
+	cout << "Set B: ";
+	B.Display();
+	cout << "Set C: ";
+	C.Display();
+
+	Set D = A + C;
+	D.Display();
+
+return 0;	
 }
-
-
-/*
-int operator[](const int) const;
-bool operator<(const Set&) const;
-Set operator^(const Set&) const;
-Set operator+(const Set&) const;
-Set operator-(const Set&) const;
-
-ostream& operator<<(ostream& out, const Set& obj) { obj.Print(out); return out; }
-istream& operator>>(istream& in, Set& obj) { obj.Insert(in); return in; }
-
-
-*/
