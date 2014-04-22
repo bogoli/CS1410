@@ -7,7 +7,7 @@
 // 2) How to design a dynamic stack using linked list.
 
 
-#include "IntStack.h"
+#include "DIntStack.h"
 #include <iostream> 
 using namespace std;
 
@@ -19,6 +19,7 @@ int main(){
 
 	// Test Case 2: Uncomment the following statement to test the dynamic stack
 	// DIntStack stack ;
+
 
 	try
 	{
