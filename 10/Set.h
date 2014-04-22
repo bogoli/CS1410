@@ -50,7 +50,7 @@ public:
 	void Insert(istream& in){ int n; in >> n; Insert(n); }
 
 	void Delete(int n);	
-	void Display() const;		
+	void Print() const;		
 	bool Find(int n) const; 
 	int Size(); 	
 	int operator[](const int) const; 	// return the element with that index
@@ -61,12 +61,12 @@ public:
 
 
 	// Exception class
-	class duplicateItem{
+	class DuplicateException{
 	public:
 		int number;
 		string message;
 
-		duplicateItem(int n, string m){
+		DuplicateException(int n, string m){
 			number = n;
 			message = m;
 		}

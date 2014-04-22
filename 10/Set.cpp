@@ -40,7 +40,7 @@ void Set::Insert (int n){
 		here = here->next ;
 	}
 	if (here->number == n){	
-		throw duplicateItem(n, "Duplicate Item");
+		throw DuplicateException(n, "Duplicate Item");
 	}
 
 	prev->next = newnode;
@@ -55,18 +55,18 @@ void Set::Delete (int n){
 	{	
 		prev = here ;
 		here = here->next ;
-	}
 
-	// the list has a node with the current data s
-	// delete the node
-	if (here->next != NULL)
-	{	
-		prev->next = here->next ;
+
+		if (here->next != NULL){	
+			prev->next = here->next ;
 		delete here ;
 	}
+	}
+
+	
 }
 
-void Set::Display() const{    
+void Set::Print() const{    
 	ListNode *here = head->next ;			// here is the first real node
 	
 	while (here->next != NULL)				// here->next==NULL means that here is the last real node
@@ -119,12 +119,14 @@ int Set::operator[](const int n) const{
 	while (here->next != NULL){ // here->next==NULL means that here is the last real node	
 		prev = here;
 		here = here->next;
+
+		if(counter == n){
+			return here->number;
+		}
+
 		++counter;
 	}
 
-	if(counter == n){
-		return here->number;
-	}
 	// if out of bounds return -1
 	return -1;
 
@@ -138,11 +140,13 @@ bool Set::operator<(const Set& S2) const{
 	while (here->next != NULL){
 		prev = here;
 		here = here->next;
+
+		if(S2.Find(here->number) == false){
+			return false;
+		}
 	}
 
-	if(S2.Find(here->number) == false){
-		return false;
-	}
+
 	return true;
 }
 
@@ -156,30 +160,30 @@ Set Set::operator^(const Set& S2) const{
 	while (here->next != NULL){
 		prev = here;
 		here = here->next;
-	}
 
-	if(S2.Find(here->number) == true){
-		intersection.Insert(here->number);
+		if(S2.Find(here->number) == true){
+			intersection.Insert(here->number);
+		}
 	}
-
 	return intersection;
 }
 
 
 Set Set::operator+(const Set& S2) const{
 	ListNode *here = head->next;
-	ListNode *prev = head;
 
 	Set addition = Set(S2);
 	
 	while (here->next != NULL){
-		prev = here;
+
+		if(S2.Find(here->number) == false){
+			addition.Insert(here->number);
+		}
+
 		here = here->next;
+
 	}
 
-	if(S2.Find(here->number) == false){
-		addition.Insert(here->number);
-	}
 
 	return addition;
 
@@ -194,11 +198,13 @@ Set Set::operator-(const Set& S2) const{
 	while (here->next != NULL){
 		prev = here;
 		here = here->next;
+
+		if(S2.Find(here->number) == false){
+			difference.Insert(here->number);
+		}
 	}
 
-	if(S2.Find(here->number) == false){
-		difference.Insert(here->number);
-	}
+	
 
 	return difference;
 }
