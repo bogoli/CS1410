@@ -12,44 +12,57 @@ string postFixConvert(string str, DIntStack stack){
 	string fixedStr = ""; 
 
 	stack.Push(str[0]);
-	cout << "stack.Top() = " << (char) stack.Top() << endl;
+	// cout << "stack.Top() = " << (char) stack.Top() << endl;
 
 	for(int i = 0; i < str.length(); ++i){
-		if((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >='a' && str[i] <= 'z')){
+		//char c = str[i];
+    	// putchar (toupper(c));
+		// cout << "\tstr: " << str[i] << endl;
+
+		if(str[i] >= 'A' && str[i] <= 'Z'){
 			fixedStr.append(1, str[i]);
+			//cout << "i: " << i << " fixedStr = " << fixedStr << endl;
 		}
 		else if(str[i] == '('){
 			stack.Push(str[i]);
-			cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+			//cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
 		}
 		else if (str[i] == ')'){
 			while(stack.Top() != '('){
 				if(stack.Top() != '('){
-					cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+					// cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
 					fixedStr.append(1, stack.Pop());
+					// cout << "i: " << i << " fixedStr = " << fixedStr << endl;
 				}
 			}
 		}
+
 		else if(str[i] == '/' || str[i] == '*' ){
 			stack.Push(str[i]);
-			cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+			// cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
 		}
+
 		else if(str[i] == '+' || str[i] == '-'){
-			if(stack.Top() == '*' || stack.Top() == '/'){
+			if(stack.Top() == '*' || stack.Top() == '/' || stack.Top() == '+'|| stack.Top() == '-' ){
 				// stack has higher precedence --> pop off the stack then push
-				fixedStr.append(1,stack.Pop());
-				stack.Push(str[i]);
-				cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+				while((stack.Top() < 'A' || stack.Top() > 'Z') && stack.Top() != '['){
+					// cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+					fixedStr.append(1,stack.Pop());
+					//cout << "i: " << i << " fixedStr = " << fixedStr << endl;
+				}
+					stack.Push(str[i]);
+				//cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
 			}
 			else{
+				//cout << "else " << endl;
 				stack.Push(str[i]);
-				cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+				//cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
 			}
 		}
 		else if(str[i] == ']'){
 			// end of expression
 			while(stack.Top() != '['){
-				cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
+				//cout << "i: " << i <<  " stack.Top() = " << (char) stack.Top() << endl;
 				if(stack.Top() == '('){
 					stack.Pop();
 				}
@@ -74,20 +87,28 @@ int main(){
 	// cin >> userInput;
 
 	try{
-		/*
-		cout << "[A+(B-C)]" << endl;
-		cout << postFixConvert("[A+(B-C)]", stack) << endl << endl;
+		
+		cout << "[A+(B+C)]" << endl;
+		cout << postFixConvert("[A+(B+C)]", stack)<< endl;
+		cout << "Should be: ABC++" << endl;
+
+		cout << endl;
 
 		cout << "[(A+B)+C]" << endl;
-		cout << postFixConvert("[(A+B)+C)]", stack) << endl << endl;
+		cout << postFixConvert("[(A+B)+C)]", stack) << endl;
+		cout << "Should be: ab+c+" << endl;
+
+		cout << endl;
 
 		cout << "[(a/b)*(c/d)]" << endl;
-		cout << postFixConvert("[(a/b)*(c/d)]", stack) << endl << endl;
+		cout << postFixConvert("[(A/B)*(C/D)]", stack) << endl ;
+		cout << "Should be: ab/cd/*" << endl;
 
-		*/
-		cout << "[a/(b+c*d-e)]" << endl;
-		cout << postFixConvert("[a/(b+c*d-e)", stack) << endl << endl;
-		cout << "Should be: abcd*+e-/" << endl;
+		cout << endl;
+		
+		cout << "[A-B*C+D/E]" << endl;
+		cout << postFixConvert("[A-B*C+D/E]", stack) << endl;
+		cout << "Should be: ABC*-DE/+" << endl;
 		/*
 		cout << "[a-b*c+d/e]" << endl;
 		cout << postFixConvert("[a-b*c+d/e", stack) << endl << endl;
