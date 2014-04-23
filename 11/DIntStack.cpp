@@ -26,9 +26,9 @@ int DIntStack::Pop()
 	if (count == 0)
 		throw IsEmptyException() ;
 
-	ListNode *temp = top ;   // temp is the node to be deleted
-	int item = temp->item ;      // obtain the information in the to-be-deleted node
-	top = temp->next ;          // Find the new top after the deleting
+	ListNode *temp = top;		// temp is the node to be deleted
+	int item = temp->item;		// obtain the information in the to-be-deleted node
+	top = temp->next; 			// Find the new top after the deleting
 	count-- ;
 
 	delete temp ;

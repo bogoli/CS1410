@@ -1,64 +1,81 @@
-// Example 1 for Chapter 18: Stacks and Queues
-
-// This example shows design of two kinds of stacks:
-// 1) How to design a static stack using array.
-// Note: This static stack is an upside down stack
-// since the first element of the stack is placed at the first position (smallest address)
-// 2) How to design a dynamic stack using linked list.
-
+// Lia Bogoev
+// A01240372
+// CS1410
 
 #include "DIntStack.h"
 #include <iostream> 
+#include <string>
 using namespace std;
+
+
+string postFixConvert(string str, DIntStack stack){
+/*
+Push [ onto the stack.
+Move from left to right in the infix expression to read each input item until “]” is read
+For each input item
+If it is a number (i.e., operand), output this number (e.g., capitalized ‘A’ to ‘Z’) 
+Else if it is an operator:
+	a) If the current input item is ‘(’, push ‘(’ onto the stack.
+	b) If the current input item is ‘)’, pop elements off the stack and output them until
+	reaching a corresponding ‘(’ symbol. This operation ensures that the elements 
+	after ‘(’ is printed in the Last-In-First-Out manner and the ‘(’ 
+	symbol is popped off the stack.
+	c) If the top operator on the stack has higher precedence than the current input item,
+		c.1) pop any operators on the stack which are of higher 
+			 precedence and output the popped operators; 
+		c.2) push the input operator.
+	d) If the top operator on the stack has lower precedence than the current input item,
+		push the input operator.
+	e) If the current input item is ‘]’, pop any operators on the stack until the stack 
+	is empty and output the popped operators.
+*/
+
+	string fixedStr = ""; 
+
+	stack.Push((int) str[0]);
+
+	for(int i = 0; i < str.length(); ++i){
+		if(str[i] >= 'A' && str[i] <= 'Z'){
+			fixedStr.append(1, str[i]);
+		}
+		else if(str[i] == '('){
+			stack.Push(str[i]);
+		}
+		else if (str[i] == ')'){
+			fixedStr.append(1, stack.Pop());
+			//while(stack.Top() != '(');
+		}
+		else if(str[i] == '/'){
+			if(stack.Top() == '+' || stack.Top() == '-' || stack.Top() == '*' || stack.Top() == '('){
+				// lower precedence 
+				stack.Push(str[i]);
+			}
+		}
+
+		// cout << i << " ";
+	}
+	cout << endl;
+	return fixedStr;
+}
 
 int main(){
 	int i ;
 
-	// Test Case 1: Uncomment the following statement to test the static stack
-	IntStack stack(5) ;  // Declare a stack which can hold five integers.
+	DIntStack stack;
 
-	// Test Case 2: Uncomment the following statement to test the dynamic stack
-	// DIntStack stack ;
-
+	string userInput;
+	cin >> userInput;
 
 	try
 	{
-		cout << "Pushing five values " << endl ;
-		for (i = 0; i < 5 ; i ++)
-			stack.Push(i) ;
-		
-		cout << "Continuing pushing the value onto the stack " << endl ;
-		stack.Push(100) ;
-
-		cout << "Poping the value off the stack " << endl ;
-		for (i = 0 ; i < 5 ; i ++)
-			cout << stack.Pop() << endl ;
-
-		cout << "Continuing popping the value off the stack " << endl ;
-		cout << stack.Pop() << endl ;
-
-		cout << "Continuing popping the value off the stack " << endl ;
-		cout << stack.Pop() << endl ;
-
-		cout << "Continuing pushing the value onto the stack " << endl ;
-		stack.Push(200) ;
-
-		cout << stack.Pop() << endl ;
+		cout << postFixConvert(userInput, stack) << endl;
 	}
 	
-	catch (IntStack::IsFullException)
-	{
-		cout << "The Stack is Full " << endl ;
-	}
-
-	catch (IntStack::IsEmptyException)
+	catch (DIntStack::IsEmptyException)
 	{
 		cout << "The Stack is Empty " << endl ;
 	}
 
 
-	system("pause") ;
 	return 0 ;
 }
-
-
