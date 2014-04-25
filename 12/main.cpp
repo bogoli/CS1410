@@ -4,31 +4,60 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <string>
 #include "BSTree.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	/*
-	vector<string> a;
+	// DICTIONARY STUFF
+	vector<string> dictVector;
 	ifstream fin;
-	string word;
+	string dictWord;
 
-	fin.open(" ", ios::in);
+	fin.open("dictionary.txt", ios::in);
 
-	while(fin>> word){
-		a.push_back(word); // pushing onto the end of the stack
+	while(fin >> dictWord){
+		dictVector.push_back(dictWord); // pushing onto the end of the stack
 	}	
-	*/
 
+	fin.close();
+	// shuffle the vector
+	random_shuffle(dictVector.begin(), dictVector.end());
 
-/* Example for Chapter 19: Binary Trees
-// This program demonstrates several basic operations of the Binary Search Tree
-// All these basic operations are implemented using recursive functions
-// Note: The delete function implements the better solution as explained in slide 16
-// For simplicity, we assume that there are no whitespaces in the name
-*/
+	// make a dictionary tree
+	BSTree dictTree;
 
+	// insert the shuffled vector into the tree (shuffled so tree is balanced)
+	for (int i = 0; i < dictVector.size(); i++){
+		dictTree.Insert(dictVector[i]);
+	}
+
+	// dictTree.Traverse();  // print out the dictionary
+
+	// OUTPUT THE SIZE OF THE TREE
+
+	// READ IN THE LETTER 
+	string letterWord;
+	fin.open("letter.txt", ios::in);
+
+	cout << "These words are misspelled: \n\n" ;
+	while(fin >> letterWord){
+		
+		for(int i = 0; i < letterWord.length(); ++i){
+			// make words in the letter lowercase
+			char c = tolower(letterWord[i]);
+			letterWord[i] = c;
+		}
+		
+		if(dictTree.Search(letterWord) == false){
+			cout << "\t" << letterWord << endl;
+		}
+		
+	}	
+
+	/*
 
 	BSTree tree ;
 	string thisname ;
@@ -66,7 +95,6 @@ int main(int argc, char const *argv[])
 				else cout << "Name is not found" << endl ;
 				break;
 
-			
 			case 'P':
 			case 'p':
 				cout << tree.Traverse() << endl ;
@@ -77,13 +105,6 @@ int main(int argc, char const *argv[])
 				done = true ;
 		}
 	}
-
+*/
 	return 0;
 }
-/*
-randomShuffle(a.begin(), a.end()){
-	BSTree b;
-	BStree a;
-	b.Traverse();
-	a.Traverse();
-}*/

@@ -22,6 +22,30 @@ BSTree::~BSTree(){
 	// TO DO IN YOUR LAST ASSIGNMENT
 }
 
+/*
+
+    void IntBinaryTree::insert(TreeNode * &tree, int num)
+    {
+       // If the tree is empty, make a new node and make it
+       // the root of the tree.
+       if (!tree)
+          {
+            tree = new TreeNode(num);
+            return;
+}
+       // If num is already in tree: return.
+       if (tree->value == num)
+return;
+       // The tree is not empty: insert the new node into the
+       // left or right subtree.
+       if (num < tree->value)
+          insert(tree->left, num);
+       else
+          insert(tree->right, num);
+    }
+
+*/
+
 void BSTree::Insert (string s){	
 	RInsert (s, root);
 }
@@ -157,9 +181,11 @@ void BSTree::DeleteSuccessor(TreeNodeptr ptr, string& s) {
 		ptr = ptr->ptrLeft;		// all the way to the left
 	}
 	s = ptr->name;
-	cout << "The node used to replace value in the removed node contains the value of " << s << endl;
+	cout << "The node used to replace value in the removed node contains the value of ";
+	cout << s << endl;
 
-	if (count == 0) {// the smallest node in the right subtree of the deleted node is the deleted node's right child
+	if (count == 0) {// the smallest node in the right subtree of the deleted node is 
+		// the deleted node's right child
 		parent->ptrRight = ptr->ptrRight;
 		delete ptr;
 		ptr = NULL;
