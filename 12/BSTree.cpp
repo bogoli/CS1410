@@ -3,47 +3,39 @@
 #include "BSTree.h"
 
 // Constructors for the TreeNode class
-TreeNode::TreeNode()
-{
-	ptrLeft = NULL ;
-	ptrRight = NULL ;
+TreeNode::TreeNode(){
+	ptrLeft = NULL;
+	ptrRight = NULL;
 }
 
-TreeNode::TreeNode(string s)
-{
-	name = s ;
-	ptrLeft = NULL ;
-	ptrRight = NULL ;
+TreeNode::TreeNode(string s){
+	name = s;
+	ptrLeft = NULL;
+	ptrRight = NULL;
 }
 
-BSTree::BSTree()
-{
-	root = NULL ;
+BSTree::BSTree(){
+	root = NULL;
 }
 
-BSTree::~BSTree()
-{	
+BSTree::~BSTree(){	
 	// TO DO IN YOUR LAST ASSIGNMENT
 }
 
-void BSTree::Insert (string s)
-{	
+void BSTree::Insert (string s){	
 	RInsert (s, root);
 }
 
-void BSTree::Delete (string s)
-{   
+void BSTree::Delete (string s){   
 	RDelete (s, root);
 }
 
-bool BSTree::Search (string s)
-{
-	return RSearch(s, root) ;
+bool BSTree::Search (string s){
+	return RSearch(s, root);
 }
 
-string BSTree::Traverse ()
-{	
-	cout << "Postoder traversal " << endl ;
+string BSTree::Traverse (){	
+	cout << "Postoder traversal " << endl;
 	return RTraverse(root);
 }
 
@@ -52,20 +44,15 @@ string BSTree::Traverse ()
 // Else, if value is less than the node value, insert node on the left pointer
 // Else, insert node on the right pointer 
 
-void BSTree::RInsert (string s, TreeNodeptr& ptr)
-{	
-	if (ptr == NULL)  // Base Case
-	{
+void BSTree::RInsert (string s, TreeNodeptr& ptr){	
+	if (ptr == NULL){  // Base Case
 		ptr = new TreeNode(s);
 	}
-	else
-	{
-		if (s <= ptr->name)
-		{
+	else{
+		if (s <= ptr->name){
 			RInsert (s, ptr->ptrLeft);  // Recursive Case
 		}
-		else // s > ptr->name
-		{
+		else{ // s > ptr->name
 			RInsert (s, ptr->ptrRight);  // Recursive Case
 		}
 	}
@@ -77,16 +64,15 @@ void BSTree::RInsert (string s, TreeNodeptr& ptr)
 // Else, if value is larger than the node value, search node on the right pointer
 // Else, search node on the left pointer
 
-bool BSTree::RSearch (string s, TreeNodeptr& ptr)
-{
+bool BSTree::RSearch (string s, TreeNodeptr& ptr){
 	if (ptr == NULL)
-		return false ;
+		return false;
 	else if (s == ptr->name)
-		return true ;
+		return true;
 	else if (s > ptr->name)
-		return RSearch(s, ptr->ptrRight) ;
+		return RSearch(s, ptr->ptrRight);
 	else // s <= ptr->name
-		return RSearch(s, ptr->ptrLeft) ;
+		return RSearch(s, ptr->ptrLeft);
 }
 
 
@@ -95,20 +81,15 @@ bool BSTree::RSearch (string s, TreeNodeptr& ptr)
 // Else, if value is less than or equal to the node value, delete node on the left pointer
 // Else, delete node on the right pointer
 
-void BSTree::RDelete (string s, TreeNodeptr& ptr)
-{	
-	if (ptr != NULL)
-	{	
-		if (s == ptr->name)	
-		{
+void BSTree::RDelete (string s, TreeNodeptr& ptr){	
+	if (ptr != NULL){	
+		if (s == ptr->name){
 			DelNode(ptr);
 		}
-		else if (s <= ptr->name)
-		{
+		else if (s <= ptr->name){
 			RDelete(s, ptr->ptrLeft);
 		}
-		else // s > ptr->name
-		{
+		else{ // s > ptr->name
 			RDelete(s, ptr->ptrRight);
 		}
 	}
@@ -119,17 +100,16 @@ void BSTree::RDelete (string s, TreeNodeptr& ptr)
 // Node's right subtree is traversed
 // Node's data is processed
 
-string BSTree::RTraverse (TreeNodeptr ptr)
-{	
+string BSTree::RTraverse (TreeNodeptr ptr){	
 	string ls, rs;
 	
-	if (ptr == NULL)
-		return " " ;
-	else
-	{	
+	if (ptr == NULL){
+		return " ";
+	}
+	else{	
 		ls = RTraverse(ptr->ptrLeft);
 		rs = RTraverse(ptr->ptrRight);
-		cout << "Intermediate Result: " << ptr->name << endl ;
+		cout << "Intermediate Result: " << ptr->name << endl;
 		return (ls + ptr->name + " " + rs);
 	}	
 }
@@ -141,61 +121,52 @@ string BSTree::RTraverse (TreeNodeptr ptr)
 //    Attach right subtree
 //    Find new location by going all the way left
 
-void BSTree::DelNode(TreeNodeptr& ptr)
-{	
-	if (ptr->ptrLeft == NULL && ptr->ptrRight == NULL)	// delete a leaf node
-	{	
+void BSTree::DelNode(TreeNodeptr& ptr){	
+	if (ptr->ptrLeft == NULL && ptr->ptrRight == NULL){	// delete a leaf node	
 		delete ptr;			
 		ptr = NULL;
 	}
 
-	else if (ptr->ptrLeft == NULL)	// delete a node with one right child
-	{	
+	else if (ptr->ptrLeft == NULL){	// delete a node with one right child
 		TreeNodeptr here = ptr;
 		ptr = ptr->ptrRight;
 		delete here;	
 	}
 
-	else if (ptr->ptrRight == NULL)	// delete a node with one left child
-	{	
+	else if (ptr->ptrRight == NULL){	// delete a node with one left child
 		TreeNodeptr here = ptr;
 		ptr = ptr->ptrLeft;
 		delete here;
 	}
 
-	else							// delete a node with two children
-	{	
+	else{							// delete a node with two children
 		string successor;
 		DeleteSuccessor (ptr, successor);
 		ptr->name = successor;
 	}
 }
 
-void BSTree::DeleteSuccessor(TreeNodeptr ptr, string& s) 
-{	
-	TreeNodeptr parent = ptr ;
+void BSTree::DeleteSuccessor(TreeNodeptr ptr, string& s) {	
+	TreeNodeptr parent = ptr;
 
 	ptr = ptr->ptrRight;		// one to the right
-	int count = 0 ;
-	while (ptr->ptrLeft != NULL)
-	{	
-		count ++ ;
-		parent = ptr ;
+	int count = 0;
+	while (ptr->ptrLeft != NULL){	
+		count ++;
+		parent = ptr;
 		ptr = ptr->ptrLeft;		// all the way to the left
 	}
 	s = ptr->name;
-	cout << "The node used to replace value in the removed node contains the value of " << s << endl ;
+	cout << "The node used to replace value in the removed node contains the value of " << s << endl;
 
-	if (count == 0) // the smallest node in the right subtree of the deleted node is the deleted node's right child
-	{
-		parent->ptrRight = ptr->ptrRight ;
-		delete ptr ;
-		ptr = NULL ;
+	if (count == 0) {// the smallest node in the right subtree of the deleted node is the deleted node's right child
+		parent->ptrRight = ptr->ptrRight;
+		delete ptr;
+		ptr = NULL;
 	}
-	else
-	{
-		parent->ptrLeft = ptr->ptrRight ;  // attach the right subtree
-		delete ptr ;
-		ptr = NULL ;
+	else{
+		parent->ptrLeft = ptr->ptrRight;  // attach the right subtree
+		delete ptr;
+		ptr = NULL;
 	}
 }

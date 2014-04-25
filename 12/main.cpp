@@ -4,10 +4,12 @@
 
 #include <iostream>
 #include <fstream>
+#include "BSTree.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
+	/*
 	vector<string> a;
 	ifstream fin;
 	string word;
@@ -17,28 +19,17 @@ int main(int argc, char const *argv[])
 	while(fin>> word){
 		a.push_back(word); // pushing onto the end of the stack
 	}	
+	*/
 
-	return 0;
-}
-/*
-randomShuffle(a.begin(), a.end()){
-	BSTree b;
-	BStree a;
-	b.Traverse();
-	a.Traverse();
-}*/
 
 /* Example for Chapter 19: Binary Trees
 // This program demonstrates several basic operations of the Binary Search Tree
 // All these basic operations are implemented using recursive functions
 // Note: The delete function implements the better solution as explained in slide 16
 // For simplicity, we assume that there are no whitespaces in the name
+*/
 
-#include "BSTree.h"
-//using namespace std ;
 
-int main()
-{	
 	BSTree tree ;
 	string thisname ;
 	
@@ -86,8 +77,13 @@ int main()
 				done = true ;
 		}
 	}
-	system("pause") ;
 
-	return 0 ;
+	return 0;
 }
-*/
+/*
+randomShuffle(a.begin(), a.end()){
+	BSTree b;
+	BStree a;
+	b.Traverse();
+	a.Traverse();
+}*/
