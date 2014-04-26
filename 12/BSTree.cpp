@@ -18,33 +18,70 @@ BSTree::BSTree(){
 	root = NULL;
 }
 
+// copy constructor
+BSTree::BSTree(const BSTree& orig){
+	root = NULL;
+	copySubtree(orig.root);
+}
+
+void BSTree::copySubtree(TreeNode * origNode){
+	if(origNode){
+		Insert(origNode->name);
+		copySubtree(origNode->ptrLeft);
+		copySubtree(origNode->ptrRight);
+	}
+}
+
+void BSTree::destroySubtree(TreeNode *tree){
+	if(!tree){
+		return;
+	}
+	destroySubtree(tree->ptrLeft);
+	destroySubtree(tree->ptrRight);
+	delete tree;
+}
+
 BSTree::~BSTree(){	
-	// TO DO IN YOUR LAST ASSIGNMENT
+	cout << "calling deconstructor...\n";
+	destroySubtree(root);
 }
 
-/*
-
-    void IntBinaryTree::insert(TreeNode * &tree, int num)
-    {
-       // If the tree is empty, make a new node and make it
-       // the root of the tree.
-       if (!tree)
-          {
-            tree = new TreeNode(num);
-            return;
+int BSTree::Size(){
+	return sizeOfTree(root);
 }
-       // If num is already in tree: return.
-       if (tree->value == num)
-return;
-       // The tree is not empty: insert the new node into the
-       // left or right subtree.
-       if (num < tree->value)
-          insert(tree->left, num);
-       else
-          insert(tree->right, num);
-    }
 
-*/
+int BSTree::sizeOfTree(TreeNode *tree){
+	int count = 1;
+	if(!tree){
+		return count;
+	}
+
+	if (tree->ptrLeft != NULL){
+		count += sizeOfTree(tree->ptrLeft);	
+	} 
+	if (tree->ptrRight != NULL){
+		count += sizeOfTree(tree->ptrRight);	
+	} 
+
+return count;
+}
+
+int BSTree::Height(){
+	return heightOfTree(root);
+}
+
+int BSTree::heightOfTree(TreeNode *tree){
+
+	if(!tree){
+		return 0;
+	}
+
+	int l = heightOfTree(tree->ptrLeft);
+	int r = heightOfTree(tree->ptrRight);
+
+	if(l > r) return l+1;
+	else return r+1;
+}
 
 void BSTree::Insert (string s){	
 	RInsert (s, root);
@@ -59,14 +96,9 @@ bool BSTree::Search (string s){
 }
 
 string BSTree::Traverse (){	
-	cout << "Postoder traversal " << endl;
+	// cout << "Postoder traversal " << endl;
 	return RTraverse(root);
 }
-
-// Steps for recursively inserting a new node
-// If node ptr is NULL, assign a new node to it and done.
-// Else, if value is less than the node value, insert node on the left pointer
-// Else, insert node on the right pointer 
 
 void BSTree::RInsert (string s, TreeNodeptr& ptr){	
 	if (ptr == NULL){  // Base Case
@@ -82,12 +114,6 @@ void BSTree::RInsert (string s, TreeNodeptr& ptr){
 	}
 }
 
-// Steps for recursively searching for a node
-// If node ptr is NULL, return false and done.
-// Else, if value is equal to the node value, return true and done.
-// Else, if value is larger than the node value, search node on the right pointer
-// Else, search node on the left pointer
-
 bool BSTree::RSearch (string s, TreeNodeptr& ptr){
 	if (ptr == NULL)
 		return false;
@@ -98,12 +124,6 @@ bool BSTree::RSearch (string s, TreeNodeptr& ptr){
 	else // s <= ptr->name
 		return RSearch(s, ptr->ptrLeft);
 }
-
-
-// Steps for recursively deleting a node
-// If value is the same as the node value, deleting operations happen.  Back to here later
-// Else, if value is less than or equal to the node value, delete node on the left pointer
-// Else, delete node on the right pointer
 
 void BSTree::RDelete (string s, TreeNodeptr& ptr){	
 	if (ptr != NULL){	
@@ -119,11 +139,6 @@ void BSTree::RDelete (string s, TreeNodeptr& ptr){
 	}
 }
 
-// Steps for recursively traversing a binary search tree in the post order
-// Node's left subtree is traversed
-// Node's right subtree is traversed
-// Node's data is processed
-
 string BSTree::RTraverse (TreeNodeptr ptr){	
 	string ls, rs;
 	
@@ -132,18 +147,11 @@ string BSTree::RTraverse (TreeNodeptr ptr){
 	}
 	else{	
 		ls = RTraverse(ptr->ptrLeft);
+		cout << "  " << ptr->name << endl;
 		rs = RTraverse(ptr->ptrRight);
-		cout << "Intermediate Result: " << ptr->name << endl;
 		return (ls + ptr->name + " " + rs);
 	}	
 }
-
-// Deleting a node function considers three scenarios:
-// 1. Delete one leaf node
-// 2. Delete a node with one child
-// 3. Delete a node with two children
-//    Attach right subtree
-//    Find new location by going all the way left
 
 void BSTree::DelNode(TreeNodeptr& ptr){	
 	if (ptr->ptrLeft == NULL && ptr->ptrRight == NULL){	// delete a leaf node	
